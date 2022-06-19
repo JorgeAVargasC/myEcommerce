@@ -6,7 +6,7 @@ import SignUp from "./pages/SignUp";
 
 export default function App() {
 	return (
-		<div className="App bg-slate-900 min-h-full">
+		<div className="App bg-slate-900 min-h-screen text-white flex items-center flex-col w-full">
 			<Router>
 				<Navbar />
 				<Routes>

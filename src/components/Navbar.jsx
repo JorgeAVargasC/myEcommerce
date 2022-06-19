@@ -1,13 +1,12 @@
-import { Link } from "react-router-dom";
+import Navlinks from "./Navlinks";
 
 export default function Navbar() {
 	return (
-		<nav>
-			<ul>
-				<li><Link to={"/"}>Home</Link></li>
-				<li><Link to={"/login"}>Login</Link></li>
-				<li><Link to={"/signup"}>Sign Up</Link></li>
-			</ul>
-		</nav>
+		<div className="bg-slate-800 w-full flex justify-center">
+			<div className="flex justify-between items-center w-11/12">
+				<h1>Logo</h1>
+				<Navlinks />
+			</div>
+		</div>
 	);
 }
