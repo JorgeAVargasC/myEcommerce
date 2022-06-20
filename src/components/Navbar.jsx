@@ -24,7 +24,7 @@ export default function Navbar() {
 				</div>
 
 				{/* Desktop Navigation */}
-				<div className="hidden md:block">
+				<div className="hidden md:block h-full">
 					<NavlinksDesk />
 				</div>			
 			</div>
