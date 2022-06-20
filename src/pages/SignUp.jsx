@@ -1,5 +1,7 @@
 export default function SignUp() {
-  return (
-    <div>SignUp</div>
-  )
+	return (
+		<div className="w-11/12 mt-20 bg-slate-700 flex justify-center items-center">
+			<h1>SignUp</h1>
+		</div>
+	);
 }
