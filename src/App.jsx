@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Store from "./pages/Store";
+import Cart from "./pages/Cart";
 
 export default function App() {
 	return (
@@ -11,8 +13,10 @@ export default function App() {
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
-					<Route path="/signup" element={<SignUp />} />
 					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<SignUp />} />
+					<Route path="/store" element={<Store />} />
+					<Route path="/cart" element={<Cart />} />
 				</Routes>
 			</Router>
 		</div>
