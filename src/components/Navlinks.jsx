@@ -15,7 +15,7 @@ export default function Navlinks() {
 		if (location.pathname === path) {
 			return `${baseStyle} border-white text-white`;
 		} else {
-			return `${baseStyle} border-slate-900 text-slate-500`;
+			return `${baseStyle} border-slate-900 text-slate-500 hover:text-white duration-200`;
 		}
 	};
 
@@ -51,7 +51,7 @@ export default function Navlinks() {
 				<li className="mt-10 h-14 flex items-center justify-center">
 					<Link
 						to={"/login"}
-						className="text-emerald-500 border-emerald-500 border-2 rounded-md flex items-center justify-center w-11/12 h-3/4"
+						className="text-emerald-500 border-emerald-500 border-2 rounded-md flex items-center justify-center w-11/12 h-3/4 hover:bg-emerald-500 hover:text-white duration-200"
 						onClick={() => setOpen(false)}
 					>
 						Login
@@ -60,7 +60,7 @@ export default function Navlinks() {
 				<li className="h-14 flex items-center justify-center">
 					<Link
 						to={"/signup"}
-						className="bg-emerald-500 border-emerald-500 border-2 rounded-md flex items-center justify-center w-11/12 h-3/4"
+						className="bg-emerald-500 border-emerald-500 border-2 rounded-md flex items-center justify-center w-11/12 h-3/4 hover:bg-emerald-600 duration-200 hover:border-emerald-600"
 						onClick={() => setOpen(false)}
 					>
 						Sign Up
