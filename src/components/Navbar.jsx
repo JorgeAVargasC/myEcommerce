@@ -9,13 +9,13 @@ export default function Navbar() {
 	const {isOpen, setOpen} = useContext(navbarContext);
 
 	return (
-		<div className="bg-slate-900 h-16 w-full flex justify-center fixed">
+		<div className="bg-slate-900 h-16 w-full flex justify-center fixed z-20">
 			<div className="flex justify-between items-center w-11/12">
 
-				<h1 className="z-10">Logo</h1>
+				<h1 className="z-30">Logo</h1>
 
 				{/* Mobile Navigation */}
-				<div className="md:hidden z-10">
+				<div className="md:hidden z-30">
 					<Hamburger rounded toggled={isOpen} toggle={setOpen} direction="left" duration={0.4} size={32}/>
 				</div>
 				
