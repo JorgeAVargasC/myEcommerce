@@ -6,6 +6,7 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Errors from "../components/Errors";
 import useInput from "../hooks/useInput";
+import Logo from "../assets/Logo.svg";
 
 export default function SignUp() {
 	const { setUser } = useContext(authContext);
@@ -42,8 +43,9 @@ export default function SignUp() {
 	};
 
 	return (
-		<div className="w-11/12 min-h-screen flex justify-center items-center">
+		<div className="w-11/12 mt-20 flex justify-center items-center">
 			<div className="w-11/12 md:w-1/3 flex flex-col">
+			<img className="mb-4 w-24 h-auto flex self-center" src={Logo} alt="Logo" />
 				<p className="flex justify-center mb-4 text-xl">Sign Up</p>
 				<form onSubmit={signup}>
 					<div className="relative mb-4">
