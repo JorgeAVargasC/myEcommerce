@@ -32,7 +32,7 @@ export default function Login() {
 			navigate("/");
 		})
 		.catch((error) => {
-			console.log(error);
+			console.table(error);
 			setErrors({
 				isErrors: true,
 				errors: error.errors.map((e) => e.message),

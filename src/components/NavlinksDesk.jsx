@@ -55,18 +55,18 @@ export default function NavlinksDesk() {
 					</>
 				) : (
 					<>
-						<li className="flex mr-4 h-full">
+						<li className="flex mr-4 justify-center items-center h-full">
 							<Link to={"/store"} className={activeLink("/store")}>
 								Store
 							</Link>
 						</li>
-						<li className="flex mr-4 h-full">
+						<li className="flex mr-4 justify-center items-center h-full">
 							<Link to={"/cart"} className={activeLink("/cart")}>
 								Cart
 							</Link>
 						</li>
-						<li className="flex mr-4 h-full items-center border-b-4 rounded">
-							Hi, {user.name}
+						<li className="flex mr-4 justify-center items-center h-full">
+							<p className="h-2/3 flex justify-center items-center border-b-2 rounded-sm">Hi, {user.name}</p> 
 						</li>
 						<li className="flex justify-center items-center h-full">
 							<button
