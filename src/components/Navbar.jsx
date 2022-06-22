@@ -1,9 +1,10 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import Navlinks from "./Navlinks";
 import NavlinksDesk from "./NavlinksDesk";
 import { Spin as Hamburger } from "hamburger-react";
 import { navbarContext } from "../context/NavbarContext";
-
+import Logo from "../assets/Logo.svg"
 export default function Navbar() {
 
 	const {isOpen, setOpen} = useContext(navbarContext);
@@ -12,7 +13,9 @@ export default function Navbar() {
 		<div className="bg-slate-900 h-16 w-full flex justify-center fixed z-20">
 			<div className="flex justify-between items-center w-11/12">
 
-				<h1 className="z-30">Logo</h1>
+				<Link to="/">
+					<img src={Logo} className="z-30 w-12 h-auto"/>
+				</Link>
 
 				{/* Mobile Navigation */}
 				<div className="md:hidden z-30">

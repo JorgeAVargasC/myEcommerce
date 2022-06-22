@@ -17,7 +17,7 @@ export default function NavlinksDesk() {
 	};
 
 	const activeLink = (path) => {
-		const baseStyle = "w-20 h-full flex justify-center items-center border-b-4 rounded";
+		const baseStyle = "w-20 h-2/3 flex justify-center items-center border-b-2 rounded-sm";
 		if (location.pathname === path) {
 			return `${baseStyle} border-emerald-500 text-emerald-500`;
 		} else {
@@ -28,7 +28,7 @@ export default function NavlinksDesk() {
 	return (
 		<nav className="h-full w-full flex justify-center items-center">
 			<ul className="flex h-full items-center">
-				<li className="flex mr-4 h-full">
+				<li className="flex mr-4 justify-center items-center h-full">
 					<Link to={"/"} className={activeLink("/")}>
 						Home
 					</Link>
