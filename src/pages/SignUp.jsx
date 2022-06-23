@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { post } from "../api/";
 import { authContext } from "../context/AuthContext";
 import { FaFacebookSquare } from "react-icons/fa";
@@ -44,7 +44,7 @@ export default function SignUp() {
 
 	return (
 		<div className="w-11/12 mt-20 flex justify-center items-center">
-			<div className="w-11/12 md:w-1/3 flex flex-col">
+			<div className="w-11/12 md:w-1/3 mb-4 flex flex-col">
 			<img className="mb-4 w-24 h-auto flex self-center" src={Logo} alt="Logo" />
 				<p className="flex justify-center mb-4 text-xl">Sign Up</p>
 				<form onSubmit={signup}>
@@ -68,7 +68,9 @@ export default function SignUp() {
 				<span className="flex justify-center mb-4 text-slate-500">Or</span>
 
 				<a className="h-10 mb-4 flex justify-center items-center bg-slate-800 rounded hover:bg-slate-700 duration-200" href="https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/google"><FcGoogle className="w-6 h-auto mr-2" />	Google Sign Up </a>
-				<a className="h-10 flex justify-center items-center bg-blue-600 rounded hover:bg-blue-700 duration-200"	href="https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/facebook"><FaFacebookSquare className="w-6 h-auto mr-2" /> Facebook Sign Up </a>
+				<a className="h-10 mb-4 flex justify-center items-center bg-blue-600 rounded hover:bg-blue-700 duration-200"	href="https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/facebook"><FaFacebookSquare className="w-6 h-auto mr-2" /> Facebook Sign Up </a>
+				<p className="self-center text-center">You already have an account?</p>
+				<Link to="/login" className="self-center text-center text-emerald-400">Login Here!</Link>
 			</div>
 			<Errors errors={errors} />
 		</div>

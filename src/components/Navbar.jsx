@@ -13,8 +13,8 @@ export default function Navbar() {
 		<div className="bg-slate-900 h-16 w-full flex justify-center fixed z-20">
 			<div className="flex justify-between items-center w-11/12">
 
-				<Link to="/">
-					<img src={Logo} className="z-30 w-12 h-auto"/>
+				<Link to="/" className="z-30">
+					<img src={Logo} className="w-12 h-auto"/>
 				</Link>
 
 				{/* Mobile Navigation */}
