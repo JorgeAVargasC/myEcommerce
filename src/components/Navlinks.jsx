@@ -52,7 +52,7 @@ export default function Navlinks() {
 
 				{!logged ? (
 					<>
-						<li className="mt-10 h-14 flex items-center justify-center">
+						<li className="mt-4 h-14 flex items-center justify-center">
 							<Link
 								to={"/login"}
 								className="text-emerald-500 border-emerald-500 border-2 rounded-md flex items-center justify-center w-11/12 h-3/4 hover:bg-emerald-500 hover:text-white duration-200"
