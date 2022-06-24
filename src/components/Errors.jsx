@@ -2,8 +2,6 @@ import React from "react";
 
 export default function Errors({ errors }) {
 
-	console.log(errors)
-
 	return (
 		<>
 			{errors.isErrors && (
