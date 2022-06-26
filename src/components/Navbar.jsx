@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-// import Navlinks from "./Navlinks";
-// import NavlinksDesk from "./NavlinksDesk";
-import Navlinks2 from "./Navlinks2";
+import Navlinks from "./Navlinks";
 import { Spin as Hamburger } from "hamburger-react";
 import { navbarContext } from "../context/NavbarContext";
 import Logo from "../assets/Logo.svg";
@@ -29,22 +27,14 @@ export default function Navbar() {
 				</div>
 
 				<div className="fixed w-full">
-					{isOpen && <Navlinks2 />}
-				</div>
-
-				{/* Desktop Navigation */}
-				<div className="hidden md:block h-full">
-					<Navlinks2/>
-				</div>
-
-				{/* <div className="fixed w-full">
 					{isOpen && <Navlinks />}
 				</div>
 
 				{/* Desktop Navigation */}
-				{/* <div className="hidden md:block h-full">
-					<NavlinksDesk />
-				</div>			  */}
+				<div className="hidden md:block h-full">
+					<Navlinks/>
+				</div>
+				
 			</div>
 		</div>
 	);
