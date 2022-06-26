@@ -45,7 +45,7 @@ export default function Navlinks() {
 			<ul className="w-full md:flex md:h-full md:items-center">
 
 				{logged && (
-					<li className="h-14 flex items-center justify-center text-xl md:mr-4">
+					<li className="h-14 flex items-center justify-center text-xl md:hidden md:mr-4">
 						Hi, {user.name}
 					</li>
 				)}
@@ -102,7 +102,7 @@ export default function Navlinks() {
 						</li>
 
 						{logged && (
-							<li className="h-14 flex items-center justify-center text-xl md:mr-4 sm:hidden">
+							<li className="h-14 md:flex items-center justify-center md:mr-4 sm:hidden">
 								Hi, {user.name}
 							</li>
 						)}
