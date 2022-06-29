@@ -26,7 +26,11 @@ export default function Store() {
 		<>
 			{modal && (
 				<div className="animate__animated animate__fadeIn fixed z-50 top-0 w-full min-h-screen flex justify-center items-center">
-					<div className="absolute top-0 w-full min-h-screen bg-slate-900 opacity-70"></div>
+					<div
+						className="absolute top-0 w-full min-h-screen bg-slate-900 opacity-70"
+						onClick={() => setModal(false)}
+					></div>
+
 					<div className="animate__animated animate__fadeInDown z-50 w-3/4 md:w-1/3 bg-gray-900 rounded-lg">
 						<MdClose
 							className="absolute bg-emerald-500 rounded hover:bg-white hover:text-emerald-500 hover:cursor-pointer duration-300 w-8 top-2 right-2 h-auto"
@@ -48,7 +52,7 @@ export default function Store() {
 						<div className="flex flex-col p-4 h-full justify-between">
 							<p className="mb-1">{modal.name}</p>
 							<p className="mb-2 text-white bg-emerald-500 px-2 rounded-full w-fit">{`$ ${modal.price}`}</p>
-							<p className="mb-2 max-h-52 text-slate-400">{modal.description}</p>
+							<p className="mb-2 max-h-32 text-slate-400 overflow-y-scroll pr-4 text-justify">{modal.description}</p>
 							<button className="h-10 bg-emerald-500 border-emerald-500 border-2 rounded flex items-center justify-center hover:bg-emerald-600 duration-200 hover:border-emerald-600">
 								Add to cart
 							</button>
