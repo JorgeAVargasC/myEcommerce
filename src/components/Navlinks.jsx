@@ -3,12 +3,14 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HiHome } from "react-icons/hi";
 import { HiShoppingBag } from "react-icons/hi";
 import { HiShoppingCart } from "react-icons/hi";
+import { HiPlus } from "react-icons/hi"
 import { navbarContext } from "../context/NavbarContext";
 import { authContext } from "../context/AuthContext";
 import { get } from "../api";
 import "animate.css";
 
 export default function Navlinks() {
+
 	const { user, logged, setUser } = useContext(authContext);
 	const { setOpen } = useContext(navbarContext);
 	const location = useLocation();
@@ -98,6 +100,17 @@ export default function Navlinks() {
 							>
 								<HiShoppingCart className="w-8 h-auto mx-4 md:hidden" />
 								Cart
+							</Link>
+						</li>
+
+						<li className="h-14 md:flex md:mr-4 md:justify-center md:items-center md:h-full">
+							<Link
+								to={"/create"}
+								className={activeLink("/create")}
+								onClick={() => setOpen(false)}
+							>
+								<HiPlus className="w-8 h-auto mx-4 md:hidden" />
+								Create
 							</Link>
 						</li>
 

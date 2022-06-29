@@ -4,7 +4,9 @@ import Navlinks from "./Navlinks";
 import { Spin as Hamburger } from "hamburger-react";
 import { navbarContext } from "../context/NavbarContext";
 import Logo from "../assets/Logo.svg";
+
 export default function Navbar() {
+	
 	const { isOpen, setOpen } = useContext(navbarContext);
 
 	return (
