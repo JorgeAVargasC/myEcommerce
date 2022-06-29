@@ -10,27 +10,27 @@ import Cart from "./pages/Cart";
 import Create from "./pages/Create";
 import NavbarProvider from "./context/NavbarContext";
 import { authContext } from "./context/AuthContext";
-import { cartContext } from "./context/CartContext";
+// import { cartContext } from "./context/CartContext";
 
 export default function App() {
 	const { setUser } = useContext(authContext);
-	const { setItems } = useContext(cartContext);
+	// const { setItems } = useContext(cartContext);
 	// Recuperamos sesión del usuario
 	useEffect(() => {
 		get("/api/auth/validate")
 			.then((result) => {
 				setUser({ type: "LOGIN", payload: result.user });
-				get("/api/cart")
-					.then((data) => {
-						setItems({
-							type: "UPDATE",
-							payload: data.items,
-						});
-					})
-					.catch(console.log);
+				// get("/api/cart")
+				// 	.then((data) => {
+				// 		setItems({
+				// 			type: "UPDATE",
+				// 			payload: data.items,
+				// 		});
+				// 	})
+				// 	.catch(console.log);
 			})
 			.catch((error) => console.log(error));
-	}, [setUser, setItems]);
+	}, [setUser]);
 
 	return (
 		<div className="App bg-slate-900 min-h-screen text-white flex items-center flex-col w-full">
