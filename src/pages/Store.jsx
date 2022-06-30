@@ -1,54 +1,72 @@
 import { useContext, useEffect, useState } from "react";
-import { get, post } from "../api";
+import { get, post, del } from "../api";
 import { MdOutlineBrokenImage } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineMinus } from "react-icons/ai";
 import { cartContext } from "../context/CartContext";
-import { data } from "autoprefixer";
 
 export default function Store() {
 	const [products, setProducts] = useState([]);
+	const [amount, setAmount] = useState(1);
 	const [modal, setModal] = useState(false);
-	const { setItems } = useContext(cartContext);
+	const { items, setItems } = useContext(cartContext);
 
 	const openModal = (id) => {
 		setModal(products.find((product) => product._id === id));
 	};
 
-	const changeQuantity = (action, id) => {
+	const changeAmount = (action) => {
 		if (action === "add") {
-			setProducts();
+			setAmount(amount + 1);
 		} else if (action === "sub") {
+			if (amount !== 1) {
+				setAmount(amount - 1);
+			}
 		}
 	};
 
 	useEffect(() => {
 		get("/api/products")
 			.then(({ data }) => {
-				let newProducts = data.map((d) => {
-					return {
-						...d,
-						quantity: 1,
-					};
-				});
-				setProducts(newProducts);
+				setProducts(data);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	}, []);
 
-	const add = (id) => {
+	const add = (id, quantity) => {
 		post("/api/cart/add", {
 			idProduct: id,
-			amount: 1,
+			amount: quantity,
 		})
 			.then((data) => {
+				console.log(data);
 				setItems({
 					type: "UPDATE",
 					payload: data,
 				});
+				setModal(false)
+				setAmount(1)
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	const remove = (id) => {
+		del("/api/cart/remove", {
+			idProduct: id,
+		})
+			.then((data) => {
+				console.log(data);
+				setItems({
+					type: "UPDATE",
+					payload: data,
+				});
+				setModal(false)
+				setAmount(1)
 			})
 			.catch((error) => {
 				console.log(error);
@@ -61,13 +79,19 @@ export default function Store() {
 				<div className="animate__animated animate__fadeIn fixed z-50 top-0 w-full min-h-screen flex justify-center items-center">
 					<div
 						className="absolute top-0 w-full min-h-screen bg-slate-900 opacity-70"
-						onClick={() => setModal(false)}
+						onClick={() => {
+							setModal(false);
+							setAmount(1);
+						}}
 					></div>
 
 					<div className="animate__animated animate__fadeInDown z-50 w-3/4 md:w-1/3 bg-gray-900 rounded-lg">
 						<MdClose
 							className="absolute bg-emerald-500 rounded hover:bg-white hover:text-emerald-500 hover:cursor-pointer duration-300 w-8 top-2 right-2 h-auto"
-							onClick={() => setModal(false)}
+							onClick={() => {
+								setModal(false);
+								setAmount(1);
+							}}
 						/>
 						{modal.images[0] ? (
 							<img
@@ -88,9 +112,42 @@ export default function Store() {
 							<p className="mb-2 max-h-32 text-slate-400 overflow-y-scroll pr-4 text-justify">
 								{modal.description}
 							</p>
-							<button className="h-10 bg-emerald-500 border-emerald-500 border-2 rounded flex items-center justify-center hover:bg-emerald-600 duration-200 hover:border-emerald-600">
-								Add to cart
-							</button>
+							<div className="grid grid-cols-5 gap-2">
+								<button
+									onClick={() => changeAmount("sub")}
+									className="h-8 flex justify-center items-center bg-emerald-500 rounded hover:bg-emerald-600 duration-200"
+								>
+									<AiOutlineMinus />
+								</button>
+								<p className="bg-slate-700 col-span-3 h-full rounded flex justify-center items-center">
+									{items?.some((item) => item._id === modal._id) ?
+										items?.find((item) => item._id === modal._id).amount :
+										amount	
+									}
+								</p>
+								<button
+									onClick={() => changeAmount("add")}
+									className="h-8 flex justify-center items-center bg-emerald-500 rounded hover:bg-emerald-600 duration-200"
+								>
+									<AiOutlinePlus />
+								</button>
+
+								{items?.some((item) => item._id === modal._id) ? (
+									<button
+										onClick={() => remove(modal._id)}
+										className="h-10 col-span-5 bg-red-500 border-red-500 border-2 rounded flex items-center justify-center hover:bg-red-600 duration-200 hover:border-red-600"
+									>
+										Remove from cart
+									</button>
+								) : (
+									<button
+										onClick={() => add(modal._id, amount)}
+										className="h-10 col-span-5 bg-emerald-500 border-emerald-500 border-2 rounded flex items-center justify-center hover:bg-emerald-600 duration-200 hover:border-emerald-600"
+									>
+										Add to cart
+									</button>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -125,23 +182,22 @@ export default function Store() {
 								<div className="flex flex-col p-4">
 									<p className="mb-1">{product.name}</p>
 									<p className="mb-2 text-white bg-emerald-500 px-2 rounded-full w-fit">{`$ ${product.price}`}</p>
-									{/* <div className="flex justify-between items-center mb-2">
-										<button className="h-8 w-1/6 flex justify-center items-center bg-emerald-500 rounded hover:bg-emerald-600 duration-200">
-											<AiOutlineMinus />
+
+									{items?.some((item) => item._id === product._id) ? (
+										<button
+											onClick={() => remove(product._id)}
+											className="h-10 bg-red-500 border-red-500 border rounded flex items-center justify-center hover:bg-red-600 duration-200 hover:border-red-600"
+										>
+											Remove from cart
 										</button>
-										<p className="bg-slate-700 h-full mx-1 rounded w-4/6 flex justify-center items-center">
-											{product.quantity}
-										</p>
-										<button className="h-8 w-1/6 flex justify-center items-center bg-emerald-500 rounded hover:bg-emerald-600 duration-200">
-											<AiOutlinePlus />
+									) : (
+										<button
+											onClick={() => openModal(product._id)}
+											className="h-10 bg-emerald-500 border-emerald-500 border rounded flex items-center justify-center hover:bg-emerald-600 duration-200 hover:border-emerald-600"
+										>
+											Add to cart
 										</button>
-									</div> */}
-									<button
-										onClick={() => add(product._id)}
-										className="h-10 bg-emerald-500 border-emerald-500 border rounded flex items-center justify-center hover:bg-emerald-600 duration-200 hover:border-emerald-600"
-									>
-										Add to cart
-									</button>
+									)}
 								</div>
 							</div>
 						);

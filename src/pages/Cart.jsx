@@ -5,12 +5,12 @@ import { cartContext } from "../context/CartContext";
 export default function Cart() {
 	const { items, setItems } = useContext(cartContext);
 
-	// del("/api/cart/remove",{
-	// 	idProduct:"62ba18db0b4c742f9af79645"
-	// })
-	// .then(data => {
-	// 	console.log(data)
-	// })
+	del("/api/cart/remove",{
+		idProduct:"62ba16bcb96a7de3835aeed5"
+	})
+	.then(data => {
+		console.log(data)
+	})
 	
 
 	useEffect(() => {
