@@ -13,6 +13,20 @@ import { stripePK } from "../config";
 import PaymentForm from "../components/PaymentForm";
 
 const stripe = loadStripe(stripePK);
+const appearance = {
+	theme: "night",
+	labels: "floating",
+	variables: {
+		colorPrimary: '#10b981',
+		colorBackground: '#1e293b',
+		colorText: '#64748b',
+		colorDanger: '#df1b41',
+		fontFamily: 'Ideal Sans, system-ui, sans-serif',
+		spacingUnit: '2px',
+		borderRadius: '4px',
+		// See all possible variables below
+	  }
+};
 
 export default function Cart() {
 	const { items, setItems } = useContext(cartContext);
@@ -37,19 +51,6 @@ export default function Cart() {
 			})
 			.catch(console.log);
 	}, []);
-
-	useEffect(() => {
-		get("/api/cart")
-			.then((data) => {
-				setItems({
-					type: "UPDATE",
-					payload: data,
-				});
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, [setItems]);
 
 	const update = (id, quantity) => {
 		put("/api/cart/changeAmount", {
@@ -228,10 +229,11 @@ export default function Cart() {
 				<Elements
 					options={{
 						clientSecret,
+						appearance,
 					}}
 					stripe={stripe}
 				>
-					<PaymentForm/>
+					<PaymentForm />
 				</Elements>
 			)}
 		</>
