@@ -134,9 +134,10 @@ export default function Cart() {
 					</div>
 				</div>
 			)}
+
 			<div className="w-11/12 mt-20 flex justify-center items-center flex-col">
-				<h1>Cart</h1>
-				<p>Items: {items ? items.length : 0}</p>
+				<h2 className="text-xl mb-2">My Cart</h2>
+				<p className="bg-emerald-500 rounded py-1 px-2 mb-2 self-start">Total Items: {items ? items.length : 0}</p>
 
 				<div className="relative overflow-x-auto shadow-md rounded-lg w-full">
 					<table className="w-full text-xs text-left text-white">
@@ -151,9 +152,9 @@ export default function Cart() {
 							</tr>
 						</thead>
 						<tbody>
-							{items?.map((item) => {
+							{items?.map((item, index) => {
 								return (
-									<tr key={item._id} className="bg-slate-800">
+									<tr key={item._id} className={index % 2 === 0 ? "bg-slate-800 hover:bg-slate-600" : "bg-slate-700 hover:bg-slate-600"}>
 										<td className="p-1">
 											<img
 												className="w-12 h-12 object-cover rounded"
