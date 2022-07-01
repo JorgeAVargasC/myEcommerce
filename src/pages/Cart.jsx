@@ -17,15 +17,15 @@ const appearance = {
 	theme: "night",
 	labels: "floating",
 	variables: {
-		colorPrimary: '#10b981',
-		colorBackground: '#1e293b',
-		colorText: '#64748b',
-		colorDanger: '#df1b41',
-		fontFamily: 'Ideal Sans, system-ui, sans-serif',
-		spacingUnit: '2px',
-		borderRadius: '4px',
+		colorPrimary: "#10b981",
+		colorBackground: "#1e293b",
+		colorText: "#64748b",
+		colorDanger: "#df1b41",
+		fontFamily: "Ideal Sans, system-ui, sans-serif",
+		spacingUnit: "2px",
+		borderRadius: "4px",
 		// See all possible variables below
-	  }
+	},
 };
 
 export default function Cart() {
@@ -33,6 +33,19 @@ export default function Cart() {
 	const [modal, setModal] = useState(false);
 	const [amount, setAmount] = useState(1);
 	const [clientSecret, setClientSecret] = useState();
+	const [total, setTotal] = useState(0);
+
+	const handleTotal = () => {
+		let totalAllProducts = 0;
+		items?.map((item) => {
+			totalAllProducts = totalAllProducts + item.price * item.amount;
+		});
+		setTotal(totalAllProducts.toFixed(2));
+	};
+
+	useEffect(() => {
+		handleTotal();
+	}, [handleTotal]);
 
 	const changeAmount = (action) => {
 		if (action === "add") {
@@ -64,6 +77,7 @@ export default function Cart() {
 					payload: data,
 				});
 				setModal(false);
+				handleTotal();
 			})
 			.catch((error) => {
 				console.log(error);
@@ -79,6 +93,7 @@ export default function Cart() {
 					type: "UPDATE",
 					payload: data,
 				});
+				handleTotal();
 			})
 			.catch((error) => {
 				console.log(error);
@@ -152,90 +167,91 @@ export default function Cart() {
 
 			<div className="w-11/12 mt-20 flex justify-center items-center flex-col">
 				<h2 className="text-xl mb-2">My Cart</h2>
-				<p className="bg-emerald-500 rounded py-1 px-2 mb-2 self-start">
-					Total Items: {items ? items.length : 0}
-				</p>
+				<p className="bg-emerald-500 rounded py-1 px-2 mb-2 self-start">{`Total: $ ${total}`}</p>
 
-				<div className="relative overflow-x-auto shadow-md rounded-lg w-full">
-					<table className="w-full text-xs text-left text-white">
-						<thead className="bg-emerald-500 text-sm">
-							<tr>
-								<th className="p-2">Image</th>
-								<th className="p-2">Name</th>
-								<th className="p-2">Price</th>
-								<th className="p-2">Unity</th>
-								<th className="p-2">Total</th>
-								<th className="p-2">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							{items?.map((item, index) => {
-								return (
-									<tr
-										key={item._id}
-										className={
-											index % 2 === 0
-												? "bg-slate-800 hover:bg-slate-600"
-												: "bg-slate-700 hover:bg-slate-600"
-										}
-									>
-										<td className="p-1">
-											<img
-												className="w-12 h-12 object-cover rounded"
-												src={item.images[0]}
-												alt={item.name}
-											/>
-										</td>
-										<td className="p-1">{item.name}</td>
-										<td className="p-1 text-slate-400">{`$ ${item.price}`}</td>
-										<td className="p-1 text-slate-400">{item.amount}</td>
-										<td className="p-1 text-slate-400">{`$ ${
-											item.amount * item.price
-										}`}</td>
-										<td className="flex flex-col items-center">
-											<button onClick={() => remove(item._id)}>
-												<MdDeleteOutline className="bg-red-600 my-1 w-auto h-6 rounded hover:cursor-pointer hover:bg-red-500" />
-											</button>
-											<button
-												onClick={() => {
-													setModal(item);
-													setAmount(item.amount);
-												}}
-											>
-												<MdEdit className="bg-blue-600 my-1 w-auto h-6 rounded hover:cursor-pointer hover:bg-blue-500" />
-											</button>
-										</td>
-									</tr>
-								);
-							})}
-						</tbody>
+				<div className="flex flex-col md:flex-row md:items-start w-full">
+					
+					<div className="relative overflow-x-auto shadow-md rounded-lg w-full md:mr-5 md:w-2/3">
+						<table className="w-full text-xs md:text-base text-left text-white">
+							<thead className="bg-emerald-500 text-sm">
+								<tr>
+									<th className="p-2">Image</th>
+									<th className="p-2">Name</th>
+									<th className="p-2">Price</th>
+									<th className="p-2">Unity</th>
+									<th className="p-2">Total</th>
+									<th className="p-2">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{items?.map((item, index) => {
+									return (
+										<tr
+											key={item._id}
+											className={
+												index % 2 === 0
+													? "bg-slate-800 hover:bg-slate-600"
+													: "bg-slate-700 hover:bg-slate-600"
+											}
+										>
+											<td className="p-1">
+												<img
+													className="w-12 h-12 object-cover rounded"
+													src={item.images[0]}
+													alt={item.name}
+												/>
+											</td>
+											<td className="p-1">{item.name}</td>
+											<td className="p-1 text-slate-400">{`$ ${item.price}`}</td>
+											<td className="p-1 text-slate-400">{item.amount}</td>
+											<td className="p-1 text-slate-400">{`$ ${
+												item.amount * item.price
+											}`}</td>
+											<td className="flex flex-col items-center md:flex-row md:h-14 ">
+												<button onClick={() => remove(item._id)}>
+													<MdDeleteOutline className="bg-red-600 my-1 md:mr-1 w-auto h-6 md:h-7 rounded hover:cursor-pointer hover:bg-red-500 duration-200" />
+												</button>
+												<button
+													onClick={() => {
+														setModal(item);
+														setAmount(item.amount);
+													}}
+												>
+													<MdEdit className="bg-blue-600 my-1 w-auto h-6 md:h-7 rounded hover:cursor-pointer hover:bg-blue-500 duration-200" />
+												</button>
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
 
-						<tfoot className="bg-emerald-500 text-sm">
-							<tr>
-								<th className="p-2">Image</th>
-								<th className="p-2">Name</th>
-								<th className="p-2">Price</th>
-								<th className="p-2">Unity</th>
-								<th className="p-2">Total</th>
-								<th className="p-2">Action</th>
-							</tr>
-						</tfoot>
-					</table>
+							<tfoot className="bg-emerald-500 text-sm">
+								<tr>
+									<th className="p-2">Image</th>
+									<th className="p-2">Name</th>
+									<th className="p-2">Price</th>
+									<th className="p-2">Unity</th>
+									<th className="p-2">Total</th>
+									<th className="p-2">Action</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					{/* Provider */}
+					{clientSecret && (
+						<Elements
+							options={{
+								clientSecret,
+								appearance,
+							}}
+							stripe={stripe}
+						>
+							<PaymentForm />
+						</Elements>
+					)}
 				</div>
 			</div>
-
-			{/* Provider */}
-			{clientSecret && (
-				<Elements
-					options={{
-						clientSecret,
-						appearance,
-					}}
-					stripe={stripe}
-				>
-					<PaymentForm />
-				</Elements>
-			)}
 		</>
 	);
 }

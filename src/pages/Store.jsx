@@ -164,7 +164,7 @@ export default function Store() {
 			)}
 
 			<div className="w-11/12 mt-20 mb-20 flex flex-col justify-center items-center">
-				<h1 className="mb-4">Store</h1>
+				<h2 className="mb-4 text-xl">Store</h2>
 				<div className="w-full grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-5">
 					{products.map((product) => {
 						return (
