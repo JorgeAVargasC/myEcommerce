@@ -27,6 +27,17 @@ export default function Store() {
 	};
 
 	useEffect(() => {
+		get("/api/cart")
+			.then((data) => {
+				setItems({
+					type: "UPDATE",
+					payload: data,
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
 		get("/api/products")
 			.then(({ data }) => {
 				setProducts(data);
@@ -34,7 +45,7 @@ export default function Store() {
 			.catch((error) => {
 				console.log(error);
 			});
-	}, []);
+	}, [setProducts, setItems]);
 
 	const add = (id, quantity) => {
 		post("/api/cart/add", {
@@ -47,8 +58,8 @@ export default function Store() {
 					type: "UPDATE",
 					payload: data,
 				});
-				setModal(false)
-				setAmount(1)
+				setModal(false);
+				setAmount(1);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -65,8 +76,8 @@ export default function Store() {
 					type: "UPDATE",
 					payload: data,
 				});
-				setModal(false)
-				setAmount(1)
+				setModal(false);
+				setAmount(1);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -120,10 +131,9 @@ export default function Store() {
 									<AiOutlineMinus />
 								</button>
 								<p className="bg-slate-700 col-span-3 h-full rounded flex justify-center items-center">
-									{items?.some((item) => item._id === modal._id) ?
-										items?.find((item) => item._id === modal._id).amount :
-										amount	
-									}
+									{items?.some((item) => item._id === modal._id)
+										? items?.find((item) => item._id === modal._id).amount
+										: amount}
 								</p>
 								<button
 									onClick={() => changeAmount("add")}
@@ -137,7 +147,7 @@ export default function Store() {
 										onClick={() => remove(modal._id)}
 										className="h-10 col-span-5 bg-red-500 border-red-500 border-2 rounded flex items-center justify-center hover:bg-red-600 duration-200 hover:border-red-600"
 									>
-										Remove from cart
+										Remove
 									</button>
 								) : (
 									<button
@@ -188,7 +198,7 @@ export default function Store() {
 											onClick={() => remove(product._id)}
 											className="h-10 bg-red-500 border-red-500 border rounded flex items-center justify-center hover:bg-red-600 duration-200 hover:border-red-600"
 										>
-											Remove from cart
+											Remove
 										</button>
 									) : (
 										<button
