@@ -8,12 +8,17 @@ import { cartContext } from "../context/CartContext";
 
 export default function Store() {
 	const [products, setProducts] = useState([]);
+	const [allProducts, setAllProducts] = useState(0);
 	const [amount, setAmount] = useState(1);
 	const [modal, setModal] = useState(false);
 	const { items, setItems } = useContext(cartContext);
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(5);
+	const [pages, setPages] = useState([]);
 
 	const openModal = (id) => {
 		setModal(products.find((product) => product._id === id));
+		console.log(id);
 	};
 
 	const changeAmount = (action) => {
@@ -26,6 +31,23 @@ export default function Store() {
 		}
 	};
 
+	const handlePage = (p) => {
+		setPage(p);
+	};
+
+	useEffect(() => {
+		get("/api/products")
+			.then(({ data }) => {
+				console.log(data.length);
+				setAllProducts(data.length);
+				setPages([...Array(Math.floor(data.length/limit)).keys()].map(n => n+1))
+				console.log(pages)
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, [setPages]);
+
 	useEffect(() => {
 		get("/api/cart")
 			.then((data) => {
@@ -37,15 +59,17 @@ export default function Store() {
 			.catch((error) => {
 				console.log(error);
 			});
+	}, [setItems]);
 
-		get("/api/products")
+	useEffect(() => {
+		get(`/api/products/?page=${page}&limit=${limit}`)
 			.then(({ data }) => {
 				setProducts(data);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-	}, [setProducts, setItems]);
+	}, [setProducts, limit, page]);
 
 	const add = (id, quantity) => {
 		post("/api/cart/add", {
@@ -165,6 +189,29 @@ export default function Store() {
 
 			<div className="w-11/12 mt-20 mb-20 flex flex-col justify-center items-center">
 				<h2 className="mb-4 text-xl">Store</h2>
+
+				<nav className="h-10 bg-slate-800 mb-2 flex items-center justify-center border rounded border-slate-700 text-slate-500">
+					<button className="h-full px-3 border-r border-slate-700 hover:text-white duration-200">
+						Previous
+					</button>
+
+					{pages.map((p) => (
+						<button
+							key={p}
+							onClick={() => handlePage(p)}
+							className={`h-full px-3 border-r border-slate-700 hover:text-white duration-200  ${
+								p === page && "bg-emerald-500 text-white"
+							}`}
+						>
+							{p}
+						</button>
+					))}
+
+					<button className="h-full px-3 border-slate-700 hover:text-white duration-200">
+						Next
+					</button>
+				</nav>
+
 				<div className="w-full grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-5">
 					{products.map((product) => {
 						return (
