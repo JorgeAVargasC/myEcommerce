@@ -259,7 +259,7 @@ export default function Cart() {
 					</div>
 				</>
 			) : (
-				<div className="w-11/12 min-h-screen flex justify-center items-center flex-col">
+				<div className="animate__animated animate__fadeInDown w-11/12 min-h-screen flex justify-center items-center flex-col">
 					<img className="w-96" src={EmptyCart} alt="empty cart" />
 					<p className="mt-4 text-slate-400 text-xl">Oops! Your cart is empty :(</p>
 				</div>

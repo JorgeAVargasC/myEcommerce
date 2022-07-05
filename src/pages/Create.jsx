@@ -28,7 +28,7 @@ export default function Create() {
 	};
 	return (
 		<div className="w-11/12 mt-20 flex justify-center items-center">
-			<div className="w-11/12 md:w-1/3 mb-4 flex flex-col">
+			<div className="animate__animated animate__fadeInDown w-11/12 md:w-1/3 mb-4 flex flex-col">
 				<p className="flex justify-center mb-4 text-xl">Create Product</p>
 				<form onSubmit={create}>
 					<div className="relative mb-4">
