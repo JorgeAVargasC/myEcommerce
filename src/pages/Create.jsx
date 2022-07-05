@@ -33,8 +33,15 @@ export default function Create() {
 
 	const addImage = () => {
 		if (inputURL !== "" && !imagesURL.some(n => n===inputURL)) {
-			imagesURL.push(inputURL);
-			setImagesURL([...imagesURL]);
+
+			if(inputURL.includes(" ")){
+				inputURL.split(" ").map(url => {
+					imagesURL.push(url)
+				})
+			}else{
+				imagesURL.push(inputURL);
+			}
+			setImagesURL([...imagesURL]);	
 		}
 		resetInputField();
 	};

@@ -211,7 +211,7 @@ export default function Cart() {
 														{item.amount}
 													</td>
 													<td className="p-1 text-slate-400">{`$ ${
-														item.amount * item.price
+														(item.amount * item.price).toFixed(2)
 													}`}</td>
 													<td className="flex flex-col items-center md:flex-row md:h-14 ">
 														<button onClick={() => remove(item._id)}>
