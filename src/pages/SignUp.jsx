@@ -44,8 +44,8 @@ export default function SignUp() {
 
 	return (
 		<div className="w-11/12 mt-20 flex justify-center items-center">
-			<div className="w-11/12 md:w-1/3 mb-4 flex flex-col">
-			<img className="mb-4 w-24 h-auto flex self-center" src={Logo} alt="Logo" />
+			<div className="animate__animated animate__fadeInDown w-11/12 md:w-1/3 mb-4 flex flex-col">
+				<img className="mb-4 w-24 h-auto flex self-center" src={Logo} alt="Logo" />
 				<p className="flex justify-center mb-4 text-xl">Sign Up</p>
 				<form onSubmit={signup}>
 					<div className="relative mb-4">

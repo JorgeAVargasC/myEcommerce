@@ -202,17 +202,17 @@ export default function Store() {
 			<div className="w-11/12 mt-20 mb-20 flex flex-col justify-center items-center">
 				<h2 className="mb-4 text-xl">Store</h2>
 
-				<div className="h-10 flex flex-col w-full md:flex-row md:justify-between mb-4">
-					<div className="flex flex-row items-center">
+				<div className="md:h-10 flex flex-col items-center w-full md:flex-row md:justify-between mb-4">
+					<div className="flex flex-row items-center md:justify-center mb-4 md:mb-0">
 						<p className="mr-4">Limit: </p>
-						<select ref={refLimit} onClick={()=>setLimit(refLimit.current.value)} className="h-full rounded bg-slate-900">
+						<select ref={refLimit} onClick={()=>setLimit(refLimit.current.value)} className="h-10 rounded bg-slate-900">
 							<option value={10}>10</option>
 							<option value={15}>15</option>
 							<option value={20}>20</option>
 						</select>
 					</div>
 
-					<nav className="h-full bg-slate-800 mb-2 flex items-center justify-center border rounded border-slate-700 text-slate-500">
+					<nav className="h-10 bg-slate-800 flex items-center justify-center border rounded border-slate-700 text-slate-500">
 						<button
 							onClick={() => changePage("sub")}
 							className="h-full px-3 border-r border-slate-700 hover:text-white duration-200"
