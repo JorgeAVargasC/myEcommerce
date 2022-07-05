@@ -4,7 +4,7 @@
 
 *::-webkit-scrollbar {
 	width: 18px;
-    background: rgb(15 23 42);
+	background: rgb(15 23 42);
 }
 
 *::-webkit-scrollbar-track {

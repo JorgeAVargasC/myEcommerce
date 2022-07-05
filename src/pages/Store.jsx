@@ -17,8 +17,9 @@ export default function Store() {
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(10);
 	const [pages, setPages] = useState([]);
+	const searchRef = useRef();
 
-	const refLimit = useRef()
+	const refLimit = useRef();
 
 	const openModal = (id) => {
 		setModal(products.find((product) => product._id === id));
@@ -50,17 +51,6 @@ export default function Store() {
 	};
 
 	useEffect(() => {
-		get(`/api/products/?page=${page}&limit=${limit}`)
-			.then(({ total }) => {
-				setAllProducts(total);
-				setPages([...Array(Math.ceil(total / limit)).keys()].map((n) => n + 1));				
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, [setProducts, limit, page, setLimit]);
-
-	useEffect(() => {
 		get("/api/cart")
 			.then((data) => {
 				setItems({
@@ -75,8 +65,10 @@ export default function Store() {
 
 	useEffect(() => {
 		get(`/api/products/?page=${page}&limit=${limit}`)
-			.then(({ data }) => {
+			.then(({ data, total }) => {
 				setProducts(data);
+				setAllProducts(total);
+				setPages([...Array(Math.ceil(total / limit)).keys()].map((n) => n + 1));
 			})
 			.catch((error) => {
 				console.log(error);
@@ -118,6 +110,35 @@ export default function Store() {
 			.catch((error) => {
 				console.log(error);
 			});
+	};
+
+	const generalSearch = () => {
+		var productsFilter = [];
+
+		console.log(products);
+		console.log(searchRef.current.value);
+		products.filter((product) => {
+			if (searchRef.current.value !== "") {
+				if (product.name.toLowerCase().includes(searchRef.current.value.toLowerCase())) {
+					productsFilter.push(product);
+				}
+			}
+		});
+
+		if (productsFilter.length !== 0) {
+			setProducts(productsFilter);
+		} else {
+			console.log("SOLICITUD");
+			get(`/api/products/?page=${page}&limit=${limit}`)
+				.then(({ data, total }) => {
+					setProducts(data);
+					setAllProducts(total);
+					setPages([...Array(Math.ceil(total / limit)).keys()].map((n) => n + 1));
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
 	};
 
 	return (
@@ -200,12 +221,42 @@ export default function Store() {
 			)}
 
 			<div className="w-11/12 mt-20 mb-20 flex flex-col justify-center items-center">
-				<h2 className="mb-4 text-xl">Store</h2>
+				<div className="p-5 w-full flex flex-col items-center justify-center rounded-lg mb-4 bg-gradient-to-r from-green-400 to-blue-500">
+					<h2 className="text-2xl mb-4">Store</h2>
+					<div className="relative w-full md:w-1/2">
+						<div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+							<svg
+								className="w-5 h-5 text-gray-500 dark:text-gray-400"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+								></path>
+							</svg>
+						</div>
+						<input
+							ref={searchRef}
+							onChange={() => generalSearch()}
+							className="block p-3 pl-10 w-full text-slate-800 rounded-md outline-none"
+							placeholder="Search Mockups, Logos..."
+						/>
+					</div>
+				</div>
 
 				<div className="md:h-10 flex flex-col items-center w-full md:flex-row md:justify-between mb-4">
 					<div className="flex flex-row items-center md:justify-center mb-4 md:mb-0">
 						<p className="mr-4">Limit: </p>
-						<select ref={refLimit} onClick={()=>setLimit(refLimit.current.value)} className="h-10 rounded bg-slate-900">
+						<select
+							ref={refLimit}
+							onClick={() => setLimit(refLimit.current.value)}
+							className="h-10 rounded bg-slate-900"
+						>
 							<option value={10}>10</option>
 							<option value={15}>15</option>
 							<option value={20}>20</option>
@@ -289,8 +340,6 @@ export default function Store() {
 						);
 					})}
 				</div>
-
-				
 			</div>
 		</>
 	);
