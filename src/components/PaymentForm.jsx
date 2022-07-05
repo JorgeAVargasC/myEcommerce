@@ -28,7 +28,6 @@ export default function PaymentForm() {
 	};
 	return (
 		<div className="w-full mt-10 mb-20 flex items-center flex-col justify-center md:m-0 md:w-1/3">
-			<h2 className="mb-2">Payment Form</h2>
 			<form onSubmit={pay} className="w-full">
 				<PaymentElement id="payment-element"></PaymentElement>
 				<button className="h-10 w-full my-2 bg-emerald-500 border-emerald-500 border rounded flex items-center justify-center hover:bg-emerald-600 duration-200 hover:border-emerald-600">
