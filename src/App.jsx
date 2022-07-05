@@ -11,6 +11,7 @@ import Create from "./pages/Create";
 import NavbarProvider from "./context/NavbarContext";
 import { authContext } from "./context/AuthContext";
 import { cartContext } from "./context/CartContext";
+import { MyProducts } from "./pages/MyProducts";
 
 export default function App() {
 	const { setUser } = useContext(authContext);
@@ -45,6 +46,7 @@ export default function App() {
 					<Route path="/store" element={<Store />} />
 					<Route path="/cart" element={<Cart />} />
 					<Route path="/create" element={<Create />} />
+					<Route path="/myproducts" element={<MyProducts/>}/>
 				</Routes>
 			</Router>
 		</div>

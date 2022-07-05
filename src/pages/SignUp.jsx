@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { post } from "../api/";
 import { authContext } from "../context/AuthContext";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import Errors from "../components/Errors";
 import useInput from "../hooks/useInput";
 import Logo from "../assets/Logo.svg";
 import Swal from "sweetalert2";
@@ -56,7 +55,7 @@ export default function SignUp() {
 					icon: "error",
 					title: "Oops...",
 					text: "Something went wrong!",
-					footer: error.errors.map((e) => " "+e.message),
+					footer: error.errors.map((e) => " " + e.message),
 				});
 				// setErrors({
 				// 	isErrors: true,

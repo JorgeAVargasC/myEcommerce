@@ -10,7 +10,6 @@ import { cartContext } from "../context/CartContext";
 
 export default function Store() {
 	const [products, setProducts] = useState([]);
-	const [allProducts, setAllProducts] = useState(0);
 	const [amount, setAmount] = useState(1);
 	const [modal, setModal] = useState(false);
 	const { items, setItems } = useContext(cartContext);
@@ -67,7 +66,6 @@ export default function Store() {
 		get(`/api/products/?page=${page}&limit=${limit}`)
 			.then(({ data, total }) => {
 				setProducts(data);
-				setAllProducts(total);
 				setPages([...Array(Math.ceil(total / limit)).keys()].map((n) => n + 1));
 			})
 			.catch((error) => {
@@ -128,11 +126,9 @@ export default function Store() {
 		if (productsFilter.length !== 0) {
 			setProducts(productsFilter);
 		} else {
-			console.log("SOLICITUD");
 			get(`/api/products/?page=${page}&limit=${limit}`)
 				.then(({ data, total }) => {
 					setProducts(data);
-					setAllProducts(total);
 					setPages([...Array(Math.ceil(total / limit)).keys()].map((n) => n + 1));
 				})
 				.catch((error) => {

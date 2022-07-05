@@ -3,17 +3,20 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HiHome } from "react-icons/hi";
 import { HiShoppingBag } from "react-icons/hi";
 import { HiShoppingCart } from "react-icons/hi";
-import { HiPlus } from "react-icons/hi"
+import { HiPlus } from "react-icons/hi";
+import { AiOutlineOrderedList } from "react-icons/ai";
 import { navbarContext } from "../context/NavbarContext";
 import { authContext } from "../context/AuthContext";
 import { get } from "../api";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import "animate.css";
 
 export default function Navlinks() {
-
 	const { user, logged, setUser } = useContext(authContext);
 	const { setOpen } = useContext(navbarContext);
 	const location = useLocation();
+	const MySwal = withReactContent(Swal);
 
 	const navigate = useNavigate();
 
@@ -21,6 +24,12 @@ export default function Navlinks() {
 		get("/api/auth/logout").then((result) => {
 			console.log(result);
 			setUser({ type: "LOGOUT" });
+			MySwal.fire({
+				icon: "success",
+				title: `Bye bye ${user.name}!`,
+				showConfirmButton: false,
+				timer: 2000,
+			});
 			navigate("/");
 		});
 	};
@@ -28,7 +37,7 @@ export default function Navlinks() {
 	const activeLink = (path) => {
 		const baseStyle =
 			"flex items-center h-full w-full rounded border-l-4 " +
-			"md:w-20 md:h-2/3 md:justify-center md:border-0 md:border-b-2 md:rounded-sm";
+			"md:px-4 md:h-2/3 md:justify-center md:border-0 md:border-b-2 md:rounded-sm";
 		if (location.pathname === path) {
 			return (
 				`${baseStyle} border-white text-white ` +
@@ -45,7 +54,6 @@ export default function Navlinks() {
 	return (
 		<nav className="animate__animated animate__slideInRight md:animate-none z-10 bg-slate-900 w-full pt-16 min-h-full fixed top-0 left-0 flex justify-center md:pt-0 md:flex md:justify-center md:items-center md:z-auto md:relative md:h-full">
 			<ul className="w-full md:flex md:h-full md:items-center">
-
 				{logged && (
 					<li className="h-14 flex items-center justify-center text-xl md:hidden md:mr-4">
 						Hi, {user.name}
@@ -113,6 +121,17 @@ export default function Navlinks() {
 								Create
 							</Link>
 						</li>
+
+						{/* <li className="h-14 md:flex md:mr-4 md:justify-center md:items-center md:h-full">
+							<Link
+								to={"/myproducts"}
+								className={activeLink("/myproducts")}
+								onClick={() => setOpen(false)}
+							>
+								<AiOutlineOrderedList className="w-8 h-auto mx-4 md:hidden" />
+								My Products
+							</Link>
+						</li> */}
 
 						{logged && (
 							<li className="h-14 md:flex items-center justify-center md:mr-4 hidden">

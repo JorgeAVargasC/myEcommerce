@@ -35,6 +35,7 @@ export default function Cart() {
 	const [amount, setAmount] = useState(1);
 	const [clientSecret, setClientSecret] = useState();
 	const [total, setTotal] = useState(0);
+	console.log(items)
 
 	const handleTotal = () => {
 		let totalAllProducts = 0;
@@ -138,9 +139,9 @@ export default function Cart() {
 								<div className="flex flex-col p-4 h-full justify-between">
 									<p className="mb-1">{modal.name}</p>
 									<p className="mb-2 text-white bg-emerald-500 px-2 rounded-full w-fit">{`$ ${modal.price}`}</p>
-									<p className="mb-2 max-h-32 text-slate-400 overflow-y-scroll pr-4 text-justify">
-										{modal.description}
-									</p>
+									{/* <p className="mb-2 max-h-32 text-slate-400 overflow-y-scroll pr-4 text-justify">
+										{}
+									</p> */}
 									<div className="grid grid-cols-5 gap-2">
 										<button
 											onClick={() => changeAmount("sub")}
