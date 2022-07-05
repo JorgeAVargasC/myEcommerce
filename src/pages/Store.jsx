@@ -7,6 +7,8 @@ import { AiOutlineMinus } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { cartContext } from "../context/CartContext";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 export default function Store() {
 	const [products, setProducts] = useState([]);
@@ -219,6 +221,7 @@ export default function Store() {
 			<div className="w-11/12 mt-20 mb-20 flex flex-col justify-center items-center">
 				<div className="p-5 w-full flex flex-col items-center justify-center rounded-lg mb-4 bg-gradient-to-r from-green-400 to-blue-500">
 					<h2 className="text-2xl mb-4">Store</h2>
+
 					<div className="relative w-full md:w-1/2">
 						<div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 							<svg
@@ -296,6 +299,46 @@ export default function Store() {
 								className="item rounded-lg flex flex-col justify-between bg-slate-800 hover:scale-105 duration-200"
 							>
 								{product.images[0] ? (
+									<Carousel showStatus={false} showThumbs={false}>
+										{product.images.map((img) => {
+											if (img) {
+												return (
+													<div
+														onClick={() => openModal(product._id)}
+														className="hover:cursor-pointer"
+													>
+														<img
+															className="rounded-lg w-full h-40 object-cover"
+															src={img}
+														/>
+													</div>
+												);
+											} else {
+												return (
+													<div
+														onClick={() => openModal(product._id)}
+														className="flex flex-col justify-center items-center rounded-lg h-40 bg-emerald-500 hover:cursor-pointer"
+													>
+														<MdOutlineBrokenImage className="w-1/3 h-auto" />
+														<p className="text-lg">Oops!</p>
+													</div>
+												);
+											}
+										})}
+									</Carousel>
+								) : (
+									<div
+										onClick={() => openModal(product._id)}
+										className="flex flex-col justify-center items-center rounded-lg h-40 bg-emerald-500 hover:cursor-pointer"
+									>
+										<MdOutlineBrokenImage className="w-1/3 h-auto" />
+										<p className="text-lg">Oops!</p>
+									</div>
+								)}
+
+								{/* {product.images[0] ? (
+
+
 									<img
 										src={product.images[0]}
 										className="rounded-lg w-full h-40 object-cover hover:cursor-pointer"
@@ -310,7 +353,7 @@ export default function Store() {
 										<MdOutlineBrokenImage className="w-1/3 h-auto" />
 										<p className="text-lg">Oops!</p>
 									</div>
-								)}
+								)} */}
 
 								<div className="flex flex-col p-4">
 									<p className="mb-1">{product.name}</p>
