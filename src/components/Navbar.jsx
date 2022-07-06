@@ -28,7 +28,7 @@ export default function Navbar() {
 					/>
 				</div>
 
-				<div className="fixed w-full">
+				<div className="fixed w-full md:hidden">
 					{isOpen && <Navlinks />}
 				</div>
 
