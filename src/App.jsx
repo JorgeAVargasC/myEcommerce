@@ -1,17 +1,26 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, lazy, Suspense } from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import { get } from "./api";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import Store from "./pages/Store";
-import Cart from "./pages/Cart";
-import Create from "./pages/Create";
+// import Home from "./pages/Home";
+// import Login from "./pages/Login";
+// import SignUp from "./pages/SignUp";
+// import Store from "./pages/Store";
+// import Cart from "./pages/Cart";
+// import Create from "./pages/Create";
+
 import NavbarProvider from "./context/NavbarContext";
 import { authContext } from "./context/AuthContext";
 import { cartContext } from "./context/CartContext";
 import { MyProducts } from "./pages/MyProducts";
+import Loading from "./pages/Loading";
+
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const SignUp = lazy(() => import("./pages/SignUp"));
+const Store = lazy(() => import("./pages/Store"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Create = lazy(() => import("./pages/Create"));
 
 export default function App() {
 	const { setUser } = useContext(authContext);
@@ -39,15 +48,17 @@ export default function App() {
 				<NavbarProvider>
 					<Navbar />
 				</NavbarProvider>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/signup" element={<SignUp />} />
-					<Route path="/store" element={<Store />} />
-					<Route path="/cart" element={<Cart />} />
-					<Route path="/create" element={<Create />} />
-					<Route path="/myproducts" element={<MyProducts/>}/>
-				</Routes>
+				<Suspense fallback={<Loading/>}>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/signup" element={<SignUp />} />
+						<Route path="/store" element={<Store />} />
+						<Route path="/cart" element={<Cart />} />
+						<Route path="/create" element={<Create />} />
+						<Route path="/myproducts" element={<MyProducts />} />
+					</Routes>
+				</Suspense>
 			</Router>
 		</div>
 	);
