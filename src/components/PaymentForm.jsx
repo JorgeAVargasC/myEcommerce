@@ -3,15 +3,26 @@ import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useContext } from "react";
 import { cartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function PaymentForm() {
 	const stripe = useStripe();
 	const elements = useElements();
 	const { setItems } = useContext(cartContext);
 	const navigate = useNavigate();
+	const MySwal = withReactContent(Swal);
 
 	const pay = async (event) => {
 		event.preventDefault();
+
+		MySwal.fire({
+			title: "Loading",
+			didOpen: () => {
+				MySwal.showLoading();
+			},
+		});
+
 		const result = await stripe.confirmPayment({
 			elements,
 			redirect: "if_required",
@@ -23,7 +34,14 @@ export default function PaymentForm() {
 			setItems({
 				type: "CLEAR",
 			});
-			navigate("/");
+			MySwal.close();
+			MySwal.fire({
+				icon: "success",
+				title: `Success`,
+				showConfirmButton: false,
+				timer: 2000,
+			});
+			navigate("/store");
 		}
 	};
 	return (
